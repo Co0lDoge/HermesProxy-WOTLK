@@ -31,11 +31,11 @@ jobs:
         dotnet-version: 6.0.x
 
     - name: Publish
-      run: dotnet publish HermesProxy/HermesProxy.csproj --configuration ${{ matrix.configuration }} --use-current-runtime -p:UsePublishBuildSettings=true
+      run: dotnet publish HermesProxy/HermesProxy.csproj --configuration ${{ matrix.configuration }} --runtime win-x64 -p:UsePublishBuildSettings=true
 
     - name: Copy files
       run: |
-        Copy-Item -Path "HermesProxy/bin/${{ matrix.configuration }}/*/publish/*" -Destination "publish" -Recurse -Force
+        Copy-Item -Path "HermesProxy/bin/${{ matrix.configuration }}/win-x64/publish/*" -Destination "publish" -Recurse -Force
       shell: pwsh
 
     - name: Zip artifact
@@ -75,10 +75,10 @@ jobs:
         dotnet-version: 6.0.x
 
     - name: Publish
-      run: dotnet publish HermesProxy/HermesProxy.csproj --configuration ${{ matrix.configuration }} --use-current-runtime -p:UsePublishBuildSettings=true
+      run: dotnet publish HermesProxy/HermesProxy.csproj --configuration ${{ matrix.configuration }} --runtime linux-x64 -p:UsePublishBuildSettings=true
 
     - name: Copy files
-      run: cp -r ./HermesProxy/bin/${{ matrix.configuration }}/*/publish/ publish
+      run: cp -r ./HermesProxy/bin/${{ matrix.configuration }}/linux-x64/publish/ publish
 
     - name: Mark as executable
       run: chmod a+x publish/HermesProxy
@@ -119,9 +119,6 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 6.0.x
-
-    - name: Restore
-      run: dotnet restore
 
     - name: Publish (arm64)
       run: dotnet publish HermesProxy/HermesProxy.csproj --configuration ${{ matrix.configuration }} --runtime osx-arm64 -p:UsePublishBuildSettings=true
