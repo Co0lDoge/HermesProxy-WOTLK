@@ -2159,6 +2159,7 @@ public class WorldSocket : SocketBase, BnetServices.INetwork
 	}
 
 	[PacketHandler(Opcode.CMSG_LOOT_ITEM)]
+	[PacketHandler(Opcode.CMSG_AUTOSTORE_LOOT_ITEM)]
 	private void HandleLootItem(LootItemPkt loot)
 	{
 		foreach (LootRequest item in loot.Loot)
